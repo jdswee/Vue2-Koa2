@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 搜索 -->
     <div class="search-bar">
       <van-row>
         <van-col span="3">
@@ -13,6 +14,14 @@
         </van-col>
       </van-row>
     </div>
+    <!-- swipe 轮播图 -->
+    <div class="swipe-area">
+      <van-swipe :autoplay="3000" indicator-color="#fff">
+        <van-swipe-item v-for="(image, index) in bannerImages" :key="index">
+          <img v-lazy="image.imageUrl" width="100%"/>
+        </van-swipe-item>
+      </van-swipe>
+    </div>
   </div>
 </template>
 
@@ -21,7 +30,12 @@
     data() {
       return {
         msg: 'ShoppingMall',
-        location: require('../../assets/location.png')
+        location: require('../../assets/location.png'),
+        bannerImages: [
+          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
+          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
+          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
+        ]
       }
     },
   }
@@ -78,5 +92,9 @@
     border-color: #999;
     border-radius: 5px;
     background: #999;
+  }
+  .swipe-area {
+    max-height: 15rem;
+    overflow: hidden;
   }
 </style>
