@@ -18,10 +18,23 @@
     <div class="swipe-area">
       <van-swipe :autoplay="3000" indicator-color="#fff">
         <van-swipe-item v-for="(image, index) in bannerImages" :key="index">
-          <img v-lazy="image.imageUrl" width="100%"/>
+          <img v-lazy="image.image" width="100%"/>
         </van-swipe-item>
       </van-swipe>
     </div>
+    <!-- 品类 -->
+    <div class="type-bar j-typebar">
+      <div v-for="(cate, index) in category" :key="index">
+        <img v-lazy="cate.image" />
+        <span>{{cate.mallCategoryName}}</span>
+      </div>
+    </div>
+    <!-- 广告 -->
+    <div>
+      <img v-lazy="advertesPicture" width="100%">
+    </div>
+    <!-- 推荐商品 -->
+    
   </div>
 </template>
 
@@ -33,11 +46,9 @@
       return {
         msg: 'ShoppingMall',
         location: require('../../assets/location.png'),
-        bannerImages: [
-          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
-          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
-          {imageUrl:'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
-        ]
+        bannerImages: [],
+        category: [],
+        advertesPicture: ''
       }
     },
     created() {
@@ -46,6 +57,11 @@
         method: 'get'
       }).then(response => {
         console.log(response);
+        if (response.status == 200) {
+          this.category = response.data.data.category;
+          this.advertesPicture = response.data.data.advertesPicture.PICTURE_ADDRESS;
+          this.bannerImages = response.data.data.slides;
+        }
       }).catch(error => {
         console.log(error);
       })
@@ -106,7 +122,24 @@
     background: #999;
   }
   .swipe-area {
-    max-height: 15rem;
+    max-height: 9.15rem;
+    clear: both;
     overflow: hidden;
+  }
+  .type-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0 .3rem .3rem .3rem;
+    border-radius: .3rem;
+    font-size: .8rem;
+    background: #fff;
+  }
+  .type-bar div {
+    padding: .3rem;
+    text-align: center;
+  }
+  .type-bar div img {
+    width: 3rem;
   }
 </style>
