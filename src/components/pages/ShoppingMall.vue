@@ -4,7 +4,7 @@
     <div class="search-bar">
       <van-row>
         <van-col span="3">
-          <img :src="location" width="45%" class="search-icon" />
+          <img :src="location" width="47%" class="search-icon" />
         </van-col>
         <van-col span="15">
           <input type="text" class="search-input" placeholder="查找">
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
@@ -38,6 +40,16 @@
         ]
       }
     },
+    created() {
+      axios({
+        url: 'https://www.fastmock.site/mock/8b1fee580436e595d0ae54ff0bb3536a/Vue2Koa2/index',
+        method: 'get'
+      }).then(response => {
+        console.log(response);
+      }).catch(error => {
+        console.log(error);
+      })
+    }
   }
 </script>
 
@@ -50,7 +62,7 @@
     background: #e5017d;
   }
   .search-icon {
-    padding-top: .6rem;
+    padding-top: .8rem;
     padding-left: .6rem;
   }
   .search-input {
